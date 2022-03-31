@@ -6,6 +6,7 @@ import {Provider as StyletronProvider} from 'styletron-react';
 import {LightTheme, BaseProvider, styled} from 'baseui';
 import {StatefulInput} from 'baseui/input';
 import {
+    HeadingLarge,
     HeadingMedium,
     HeadingSmall,
     HeadingXLarge,
@@ -21,6 +22,12 @@ import {Block} from "baseui/block";
 import ViewMap from "./components/viewMap";
 import {Alert, ArrowDown, ArrowRight} from "baseui/icon";
 import {IoInformationCircle} from "react-icons/io5";
+import {FaParking} from "react-icons/fa";
+import {Tag, VARIANT, SIZE as SIZETAG, KIND as KINDTAG} from "baseui/tag";
+import {GrLocationPin} from "react-icons/gr";
+import {MdLocationPin, MdOutlineQrCode} from "react-icons/md";
+import {HiOutlineIdentification} from "react-icons/hi";
+import {BsFillArrowDownRightSquareFill} from "react-icons/bs";
 const engine = new Styletron();
 const Centered = styled('div', {
   display: 'flex',
@@ -33,22 +40,45 @@ function App() {
         <StyletronProvider value={engine}>
             <BaseProvider theme={LightTheme}>
                 <HeaderNavigation/>
-                <Block padding="30px" paddingTop="0px" paddingBottom="10px">
-                    <HeadingSmall marginBottom="0px">Parking Location</HeadingSmall>
-                    <HeadingXLarge marginTop="10px" marginBottom="4px"><strong>Civic Center Parking Deck</strong></HeadingXLarge>
-                    <ParagraphSmall marginTop="0px" color="muted"><strong>Lot Code: </strong>JHB-747</ParagraphSmall>
-                    <Block marginTop="50px">
-                        <ViewMap pinText="You should be here" badgeColor="purple" badgeText="JHB-747" latitude="34.8241533"
-                        longitude="-82.386209"/>
+                <Block padding="30px" paddingTop="40px" paddingBottom="30px">
+                    <HeadingLarge marginBottom="0px" margin="0px" color="accent"><FaParking size="40px"/></HeadingLarge>
+                    <HeadingXSmall marginBottom="0px" marginTop="15px" color="primary500" paddingBottom="0px">Parking Location</HeadingXSmall>
+                    <HeadingXLarge marginTop="0px" marginBottom="4px"><strong>Civic Center Parking Deck</strong></HeadingXLarge>
+                    <Block color="primary500">
+                    <ParagraphSmall marginTop="20px" marginBottom="5px" color="muted"><strong><MdOutlineQrCode/> </strong><strong>Lot Code: </strong>JHB-747</ParagraphSmall>
+                    <ParagraphSmall marginTop="0px" color="muted"><strong><MdLocationPin/> </strong><strong>Address: </strong>106 Carmaddon St. Asheville, NC 39234</ParagraphSmall>
                     </Block>
+
                     </Block>
 
                     <Block backgroundColor="backgroundSecondary" padding="30px" paddingTop="30px">
-                    <strong>
-                        <ParagraphMedium marginBottom="0px" color="accent400" ><IoInformationCircle size="32px"/></ParagraphMedium>
-                    <HeadingSmall  marginBottom="0px" paddingTop="0px" marginTop="0px"><strong>Is this the right parking
-                        location?</strong></HeadingSmall></strong>
+
+                        <Tag
+
+                            closeable={false}
+                            kind={KINDTAG.warning}
+                            variant={VARIANT.solid}
+                            size={SIZETAG.medium}
+                            overrides={{
+                                Root: {
+                                    style: {
+                                        margin: "0px",
+                                        marginLeft: "0px"
+                                    }
+                                }
+                            }}
+                        >
+                            Step 1 - Verify
+                        </Tag>
+                        <strong>
+
+                    <HeadingMedium  marginBottom="0px" paddingTop="15px" marginTop="0px"><strong>Is this the right parking
+                        location?</strong></HeadingMedium></strong>
                     <ParagraphMedium marginTop="0px">We don't want you to pay for the wrong spot</ParagraphMedium>
+                        <Block marginTop="30px">
+                            <ViewMap pinText="You should be here" badgeColor="purple" badgeText="JHB-747" latitude="34.8241533"
+                                     longitude="-82.386209"/>
+                        </Block>
                     <Button
                         onClick={() => alert("click")}
                         size={SIZE.default}
@@ -65,7 +95,7 @@ function App() {
                     >
                         Yep! Looks Right.
                     </Button>
-                    <Block marginTop="10px">
+                    <Block marginTop="10px" marginBottom="30px">
                         <Button
                             onClick={() => alert("click")}
                             size={SIZE.default}
