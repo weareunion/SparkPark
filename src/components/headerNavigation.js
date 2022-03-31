@@ -12,8 +12,9 @@ import {Block} from "baseui/block";
 import {HiMenu, HiMenuAlt1, HiMenuAlt2, HiOutlineMenuAlt1, HiOutlineMenuAlt2, HiOutlineMenuAlt4} from "react-icons/hi";
 import {KIND} from "baseui/tag";
 import {DisplayXSmall, HeadingSmall} from "baseui/typography";
+import {DarkTheme} from "baseui";
 
-export default () => {
+export default (props) => {
     return (
         <HeaderNavigation>
             <StyledNavigationList $align={ALIGN.left} style={{
@@ -29,7 +30,9 @@ export default () => {
             <StyledNavigationList $align={ALIGN.right}>
                 <StyledNavigationItem>
                     <Block paddingRight="15px">
-                        <Button shape={SHAPE.circle} kind={KIND.tertiary} overrides={{
+                        <Button onClick={() => {
+                            props.setTheme(DarkTheme)
+                        }} shape={SHAPE.circle} kind={KIND.tertiary} overrides={{
                             BaseButton: {
                                 style: ({$theme}) => ({
                                     backgroundColor: $theme.colors.primaryB
