@@ -6,6 +6,7 @@ import {HeadingLarge, HeadingMedium, HeadingXLarge, HeadingXSmall, ParagraphSmal
 import {FaParking} from "react-icons/fa";
 import {MdLocationPin, MdOutlineQrCode} from "react-icons/md";
 import React from "react";
+import IconedText from "./IconedText";
 
 export function ParkingLocationHeading(props: {
     compact: boolean,
@@ -49,12 +50,18 @@ export function ParkingLocationHeading(props: {
         <Block color="primary500">
             {props.compact ?
                 "" :
-                <ParagraphSmall marginTop="20px" marginBottom="5px" color="muted"><strong><MdOutlineQrCode/>
-                </strong><strong>Lot Code: </strong>JHB-747</ParagraphSmall>
+                <ParagraphSmall marginTop="20px" marginBottom="5px" color="muted">
+                <IconedText icon={<MdOutlineQrCode/>} margin="5px">
+                    <strong>Lot Code: </strong>JHB-747
+                </IconedText>
+                </ParagraphSmall>
             }
-            <ParagraphSmall marginTop={props.compact ? "5px" : "0px"} color="muted"><strong><MdLocationPin/>
-            </strong><strong>Address: </strong>106
-                Carmaddon St. Asheville, NC 39234</ParagraphSmall>
+            <ParagraphSmall marginTop={props.compact ? "5px" : "0px"} color="muted">
+            <IconedText margin="5px" icon={<MdLocationPin/>}>
+                106 Carmaddon St. Asheville, NC 39234
+            </IconedText>
+            </ParagraphSmall>
+
         </Block>
 
     </Block>;

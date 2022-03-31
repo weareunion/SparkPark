@@ -8,6 +8,9 @@ import {LoginForm} from "./LoginForm";
 import {ParkingLocationHeading} from "./ParkingLocationHeading";
 import {CSSTransition} from "react-transition-group";
 import {BookingSteps} from "./BookingSteps";
+import IconedText from "./IconedText";
+import {FaArrowRight} from "react-icons/fa";
+import {AiOutlineArrowRight} from "react-icons/ai";
 
 export default function BookSpace(props: {
     theme: any
@@ -51,7 +54,9 @@ export default function BookSpace(props: {
                             }
                         }}
                     >
-                        Yep! Looks Right.
+                        <IconedText iconLast icon={<AiOutlineArrowRight/>} margin="8px">
+                            Yep! Looks Right
+                        </IconedText>
                     </Button>
                     <Block marginTop="10px" marginBottom="30px">
                         <Button
@@ -80,7 +85,9 @@ export default function BookSpace(props: {
                 content: <>
 
                     <Block marginTop="15px">
-                        <img src={require('./../assets/img/handpeace.png')} width="50px" />
+                        <img src={require('./../assets/img/handsMeetingShapes.png')} width="100%" style={{
+                            filter: "saturate(200%)"
+                        }}/>
                     </Block>
                     <strong>
 
@@ -88,7 +95,21 @@ export default function BookSpace(props: {
                     <ParagraphMedium marginTop="5px">In order for us to communicate with you about your car, such as your meter running low, tickets or other information, we need your phone number</ParagraphMedium>
                     <ParagraphSmall marginBottom="30px">We will <strong>never</strong> sell your phone number, or use it for promotional activities</ParagraphSmall>
 
-                    <LoginForm onLogin={() => {setStep(1)}} />
+                    <LoginForm onLogin={() => {setStep(2)}} />
+                </>
+            }
+        },
+        {
+            step: {
+                number: 3,
+                name: 'Car',
+                content: <>
+
+                    <strong>
+
+                        <HeadingMedium marginBottom="0px" paddingTop="15px" marginTop="0px"><strong>Select or add your car</strong></HeadingMedium></strong>
+                    <ParagraphMedium marginTop="5px">If you don't have a car added, you can add it now</ParagraphMedium>
+
                 </>
             }
         },
