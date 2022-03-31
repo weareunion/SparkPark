@@ -27,7 +27,7 @@ export default function ViewMap(props) {
             width="100%"
             height="500px"
             onViewportChange={viewport => setViewport(viewport)}
-            mapStyle="mapbox://styles/mapbox/light-v10"
+            mapStyle={`mapbox://styles/mapbox/${props.theme}-v10`}
             mapboxAccessToken={"pk.eyJ1IjoidW5pb25ncm91cCIsImEiOiJja3h6ZDJjOHg2cXJmMm9vNGFneTRqcHBuIn0.N15PnrMqg1_vLgeNXryfRQ"}
         >
             <NavigationControl />

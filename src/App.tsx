@@ -3,7 +3,7 @@
 // import './App.css';
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
-import {LightTheme, BaseProvider, styled} from 'baseui';
+import {LightTheme, DarkTheme, BaseProvider, styled} from 'baseui';
 import {StatefulInput} from 'baseui/input';
 import {
     HeadingLarge,
@@ -35,12 +35,14 @@ const Centered = styled('div', {
   alignItems: 'center',
   height: '100%',
 });
+
+const theme = LightTheme
 function App() {
     return (
         <StyletronProvider value={engine}>
-            <BaseProvider theme={LightTheme}>
+            <BaseProvider theme={theme}>
                 <HeaderNavigation/>
-                <Block padding="30px" paddingTop="40px" paddingBottom="30px">
+                <Block backgroundColor="background" padding="30px" paddingTop="40px" paddingBottom="30px">
                     <HeadingLarge marginBottom="0px" margin="0px" color="accent"><FaParking size="40px"/></HeadingLarge>
                     <HeadingXSmall marginBottom="0px" marginTop="15px" color="primary500" paddingBottom="0px">Parking Location</HeadingXSmall>
                     <HeadingXLarge marginTop="0px" marginBottom="4px"><strong>Civic Center Parking Deck</strong></HeadingXLarge>
@@ -68,7 +70,7 @@ function App() {
                                 }
                             }}
                         >
-                            Step 1 - Verify
+                            <strong>Step 1 - Verify</strong>
                         </Tag>
                         <strong>
 
@@ -77,7 +79,7 @@ function App() {
                     <ParagraphMedium marginTop="0px">We don't want you to pay for the wrong spot</ParagraphMedium>
                         <Block marginTop="30px">
                             <ViewMap pinText="You should be here" badgeColor="purple" badgeText="JHB-747" latitude="34.8241533"
-                                     longitude="-82.386209"/>
+                                     longitude="-82.386209" theme={theme.name.includes('dark') ? 'dark' : 'light'}/>
                         </Block>
                     <Button
                         onClick={() => alert("click")}
