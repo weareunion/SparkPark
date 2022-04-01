@@ -115,7 +115,7 @@ export default (props) => {
                             BaseButton: {
                                 style: ({$theme}) => ({
                                     width: "100%",
-                                    backgroundColor: $theme.colors.primary700,
+                                    backgroundColor: $theme.colors.backgroundStateDisabled,
                                     color: $theme.colors.primary
                                 })
                             }
