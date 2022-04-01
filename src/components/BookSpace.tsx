@@ -66,7 +66,7 @@ export default function BookSpace(props: {
         setCars(await makeCarCards())
     }
     const stepBack = () => {
-        if (step === 3 && authUser !== undefined) {
+        if (step === 2 && authUser !== undefined) {
             setStep(step-2)
         }else setStep(step-1)
     }
@@ -131,7 +131,7 @@ export default function BookSpace(props: {
                 content: <>
 
                     <Block marginTop="15px">
-                        <img src={require('./../assets/img/handsMeetingShapes.png')} width="100%" style={{
+                        <img src={require('./../assets/img/handsMeetingShapes.png')} width="100%" alt="Friendly Hands" style={{
                             filter: "saturate(200%)"
                         }}/>
                     </Block>

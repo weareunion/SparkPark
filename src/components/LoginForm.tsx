@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {PhoneInput} from "baseui/phone-input";
 import {Button, SHAPE, SIZE} from "baseui/button";
 import {Block} from "baseui/block";
@@ -6,11 +6,10 @@ import { Notification, KIND } from "baseui/notification";
 import IconedText from "./IconedText";
 import {MdOutlineError} from "react-icons/md";
 import {PinCode} from "baseui/pin-code";
-import {HeadingMedium, HeadingXSmall, ParagraphMedium, ParagraphSmall} from "baseui/typography";
+import {HeadingXSmall, ParagraphSmall} from "baseui/typography";
 
 import authAPI from './../API/auth'
 import {AuthenticationContext} from "../Store";
-import auth from "./../API/auth";
 
 export function LoginForm(props: {
     onLogin: () => void
@@ -37,7 +36,7 @@ export function LoginForm(props: {
         }
         setLoadingState(true)
         if (!isInCodeConfirm){
-            if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(text)){
+            if (!/^[]?[(]?[0-9]{3}[)]?[-\s]?[0-9]{3}[-\s]?[0-9]{4,6}$/im.test(text)){
                 setErrorMsg('This phone number is invalid.')
                 setTimeout(() => {setErrorMsg('')}, 5000)
                 setLoadingState(false)
@@ -81,7 +80,7 @@ export function LoginForm(props: {
                         values={values}
                         onChange={({ values }) => {
                             setValues(values)
-                            if (values[values.length-1] != "") validate()
+                            if (values[values.length-1] != "") validate().then(r => (r))
                         }
                         }
                         clearOnEscape
@@ -94,8 +93,8 @@ export function LoginForm(props: {
                         ({option}) => setCountry(option)}
                     text={text}
                     onKeyUp={(e) => {
-                        if (e.keyCode === 13){
-                            validate()
+                        if (e.key === 'Enter'){
+                            validate().then(e => {return e})
                         }
                     }
                     }
@@ -115,7 +114,7 @@ export function LoginForm(props: {
                 </Notification>)}
             <Block marginTop="25px" marginBottom="50px">
                 <Button
-                    onClick={() => {validate()}}
+                    onClick={() => {validate().then(e => {return e})}}
                     size={SIZE.default}
                     shape={SHAPE.pill}
                     isLoading={loadingState}

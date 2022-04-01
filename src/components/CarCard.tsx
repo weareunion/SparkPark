@@ -13,7 +13,7 @@ export function CarCard(props: { id: string,name:string, artwork: (props: JSX.In
         <StyledBody>
             <HeadingMedium marginTop="15px" marginBottom="0px"><strong>{props.name}</strong></HeadingMedium>
 
-            <img src={require("./../assets/img/purple_porsche.webp")} width="100%"/>
+            <img src={require("./../assets/img/purple_porsche.webp")} alt="your car" width="100%"/>
             <ListItem
                 artwork={props.artwork}
                 endEnhancer={props.endEnhancer}

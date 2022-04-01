@@ -1,44 +1,28 @@
 import * as React from "react";
-import {
-    HeaderNavigation,
-    ALIGN,
-    StyledNavigationList,
-    StyledNavigationItem
-} from "baseui/header-navigation";
-import { StyledLink } from "baseui/link";
+import {useContext} from "react";
+import {ALIGN, HeaderNavigation, StyledNavigationItem, StyledNavigationList} from "baseui/header-navigation";
 import {Button, SHAPE, SIZE} from "baseui/button";
-import {IoFlash, IoMenu, IoPerson} from "react-icons/io5";
+import {IoFlash} from "react-icons/io5";
 import {Block} from "baseui/block";
-import {HiMenu, HiMenuAlt1, HiMenuAlt2, HiOutlineMenuAlt1, HiOutlineMenuAlt2, HiOutlineMenuAlt4} from "react-icons/hi";
+import {HiOutlineMenuAlt4} from "react-icons/hi";
 import {KIND} from "baseui/tag";
-import {
-    DisplayXSmall,
-    HeadingLarge,
-    HeadingSmall,
-    HeadingXSmall,
-    ParagraphMedium,
-    ParagraphSmall
-} from "baseui/typography";
-import {DarkTheme, LightTheme} from "baseui";
+import {HeadingLarge, HeadingSmall, ParagraphMedium, ParagraphSmall} from "baseui/typography";
+import {DarkTheme} from "baseui";
 import {Drawer} from "baseui/drawer";
-import {Checkbox, LABEL_PLACEMENT, STYLE_TYPE} from "baseui/checkbox";
-import {BsMoonFill} from "react-icons/bs";
 import {Navigation} from "baseui/side-navigation";
 import {FiLogIn} from "react-icons/fi";
 import {MdLocationPin, MdPayments} from "react-icons/md";
 import {AiFillCar} from "react-icons/ai";
 import IconedText from "./IconedText";
 import {RiMoneyDollarBoxFill, RiReservedFill, RiUser4Fill} from "react-icons/ri";
-import {useContext} from "react";
 import {AuthenticationContext, SignInContext} from "../Store";
 
 
 export default (props) => {
 
-    const [authUser, setAuthUser] = useContext(AuthenticationContext)
-    const [isSignInModalOpen, setIsSignInModalOpen] = React.useContext(SignInContext);
+    const AuthContextState = useContext(AuthenticationContext)
+    const SignInModalState = React.useContext(SignInContext);
     const [isOpen, setIsOpen] = React.useState(false);
-    const [checked, setChecked] = React.useState(false);
     const [activeItemId, setActiveItemId] = React.useState(
         "#primary"
     );
@@ -56,7 +40,7 @@ export default (props) => {
             itemId: "#support",
         }]
 
-    if (authUser !== undefined){
+    if (AuthContextState[0] !== undefined){
         let i = {
             title:  <IconedText icon={<RiUser4Fill/>}><strong>My Account</strong></IconedText>,
             itemId: "#account",
@@ -89,9 +73,9 @@ export default (props) => {
                 onClose={() => setIsOpen(false)}
             >
                 <Block marginTop="15px">
-                    <img src={require('./../assets/img/handpeace.png')} width="50px" />
+                    <img src={require('./../assets/img/handpeace.png')} width="50px" alt="Friendly Hands"/>
                 </Block>
-                <HeadingLarge marginBottom="0px" marginTop="10px"><strong>{authUser !== undefined ? "Welcome Back.": "Hello!"}</strong></HeadingLarge>
+                <HeadingLarge marginBottom="0px" marginTop="10px"><strong>{AuthContextState[0] !== undefined ? "Welcome Back.": "Hello!"}</strong></HeadingLarge>
                 <ParagraphMedium color="primary500" marginTop="0px">Let's get you parked.</ParagraphMedium>
                 <Navigation
                     items={menuItems}
@@ -123,7 +107,7 @@ export default (props) => {
                 </Block>
                 <Block marginTop="0px" marginBottom="30px">
                     <Button
-                        onClick={() => {setIsSignInModalOpen(true)}}
+                        onClick={() => {SignInModalState[1](true)}}
                         size={SIZE.default}
                         shape={SHAPE.pill}
                         kind={KIND.tertiary}
@@ -139,7 +123,7 @@ export default (props) => {
                     >
                         <FiLogIn style={{
                             marginRight: "10px"
-                        }}/>  {authUser !== undefined ? "Sign Out" : "Login and Sign Up"}
+                        }}/>  {AuthContextState[0] !== undefined ? "Sign Out" : "Login and Sign Up"}
                     </Button>
                 </Block>
                 <Block alignItems={ALIGN.center}>
