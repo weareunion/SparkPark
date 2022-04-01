@@ -6,7 +6,7 @@ import { Notification, KIND } from "baseui/notification";
 import IconedText from "./IconedText";
 import {MdOutlineError} from "react-icons/md";
 import {PinCode} from "baseui/pin-code";
-import {HeadingXSmall, ParagraphMedium, ParagraphSmall} from "baseui/typography";
+import {HeadingMedium, HeadingXSmall, ParagraphMedium, ParagraphSmall} from "baseui/typography";
 
 import authAPI from './../API/auth'
 import {AuthenticationContext} from "../Store";
@@ -31,6 +31,10 @@ export function LoginForm(props: {
     const [authedUser, setAuthedUser] = useContext(AuthenticationContext)
 
     const validate = async () => {
+        if (authedUser !== undefined) {
+            props.onLogin()
+            return
+        }
         setLoadingState(true)
         if (!isInCodeConfirm){
             if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(text)){
@@ -69,7 +73,8 @@ export function LoginForm(props: {
                     <IconedText icon={<MdOutlineError/>}>{errorMsg}</IconedText>
                 </Notification>
             }
-            {isInCodeConfirm ? <Block>
+
+            {isInCodeConfirm && authedUser === undefined ? <Block>
                 <HeadingXSmall marginBottom="0px"><strong>{loadingState ? "Confirming your pin code..." : "We sent you a pin code"}</strong></HeadingXSmall>
                 <ParagraphSmall marginTop="0px">{loadingState ? "One moment" : "Please enter it below "}<u>I did not receive the code</u></ParagraphSmall>
                     <PinCode
@@ -82,7 +87,7 @@ export function LoginForm(props: {
                         clearOnEscape
                     />
                 </Block> :
-                <PhoneInput
+                (authedUser === undefined ? <PhoneInput
                     country={country}
                     onCountryChange={
                         // @ts-ignore
@@ -97,7 +102,17 @@ export function LoginForm(props: {
                     onTextChange={e => setText(e.currentTarget.value)}
                     size={SIZE.default}
                     placeholder="(999) 999-9999"
-                />}
+                /> : <Notification>
+                    {() => (
+                        <>
+                            <strong>You are already logged in.</strong>{" "}
+                            <span>
+            {" "}
+                                Click the button below to continue.{" "}
+          </span>
+                        </>
+                    )}
+                </Notification>)}
             <Block marginTop="25px" marginBottom="50px">
                 <Button
                     onClick={() => {validate()}}

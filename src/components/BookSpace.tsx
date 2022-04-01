@@ -66,7 +66,9 @@ export default function BookSpace(props: {
         setCars(await makeCarCards())
     }
     const stepBack = () => {
-        setStep(step-1)
+        if (step === 3 && authUser !== undefined) {
+            setStep(step-2)
+        }else setStep(step-1)
     }
     const steps = [
         {
@@ -185,7 +187,7 @@ export default function BookSpace(props: {
         <ParkingLocationHeading back={step !== 0} compact={step !== 0} backFunc={stepBack}/>
         <CSSTransition in={inProp}  timeout={300}
                        classNames="alert">
-            <BookingSteps step={steps[step].step}/>
+            <BookingSteps step={steps[step].step} />
         </CSSTransition>
 
     </>;
