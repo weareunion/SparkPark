@@ -29,14 +29,57 @@ import {MdLocationPin, MdPayments} from "react-icons/md";
 import {AiFillCar} from "react-icons/ai";
 import IconedText from "./IconedText";
 import {RiMoneyDollarBoxFill, RiReservedFill, RiUser4Fill} from "react-icons/ri";
+import {useContext} from "react";
+import {AuthenticationContext, SignInContext} from "../Store";
 
 
 export default (props) => {
+
+    const [authUser, setAuthUser] = useContext(AuthenticationContext)
+    const [isSignInModalOpen, setIsSignInModalOpen] = React.useContext(SignInContext);
     const [isOpen, setIsOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(false);
     const [activeItemId, setActiveItemId] = React.useState(
         "#primary"
     );
+
+    let menuItems = [{
+        title: "For Providers",
+        itemId: "#providers",
+    },
+        {
+            title: "About SparkPark",
+            itemId: "#about",
+        },
+        {
+            title: "Contact Us",
+            itemId: "#support",
+        }]
+
+    if (authUser !== undefined){
+        let i = {
+            title:  <IconedText icon={<RiUser4Fill/>}><strong>My Account</strong></IconedText>,
+            itemId: "#account",
+            subNav: [
+                { title: <IconedText icon={<AiFillCar/>}><strong>My Cars</strong></IconedText>, itemId: "#cars" },
+                {
+                    title: <IconedText icon={<RiMoneyDollarBoxFill/>}><strong>Tickets</strong></IconedText>,
+                    itemId: "#tickets",
+                },
+                {
+                    title: <IconedText icon={<RiReservedFill/>}><strong>Reservations</strong></IconedText>,
+                    itemId: "#reservations",
+                },
+                {
+                    title: <IconedText icon={<MdPayments/>}><strong>Payments</strong></IconedText>,
+                    itemId: "#payments",
+                }
+            ]
+        }
+        menuItems = [i, ...menuItems]
+    }
+
+
 
     return (
         <>
@@ -48,42 +91,10 @@ export default (props) => {
                 <Block marginTop="15px">
                     <img src={require('./../assets/img/handpeace.png')} width="50px" />
                 </Block>
-                <HeadingLarge marginBottom="0px" marginTop="10px"><strong>Welcome Back.</strong></HeadingLarge>
+                <HeadingLarge marginBottom="0px" marginTop="10px"><strong>{authUser !== undefined ? "Welcome Back.": "Hello!"}</strong></HeadingLarge>
                 <ParagraphMedium color="primary500" marginTop="0px">Let's get you parked.</ParagraphMedium>
                 <Navigation
-                    items={[
-                        {
-                            title:  <IconedText icon={<RiUser4Fill/>}><strong>My Account</strong></IconedText>,
-                            itemId: "#account",
-                            subNav: [
-                                { title: <IconedText icon={<AiFillCar/>}><strong>My Cars</strong></IconedText>, itemId: "#cars" },
-                                {
-                                    title: <IconedText icon={<RiMoneyDollarBoxFill/>}><strong>Tickets</strong></IconedText>,
-                                    itemId: "#tickets",
-                                },
-                                {
-                                    title: <IconedText icon={<RiReservedFill/>}><strong>Reservations</strong></IconedText>,
-                                    itemId: "#reservations",
-                                },
-                                {
-                                    title: <IconedText icon={<MdPayments/>}><strong>Payments</strong></IconedText>,
-                                    itemId: "#payments",
-                                }
-                            ]
-                        },
-                        {
-                            title: "For Providers",
-                            itemId: "#providers",
-                        },
-                        {
-                            title: "About SparkPark",
-                            itemId: "#about",
-                        },
-                        {
-                            title: "Contact Us",
-                            itemId: "#support",
-                        }
-                    ]}
+                    items={menuItems}
                     activeItemId={activeItemId}
                     onChange={({ item }) =>
                         setActiveItemId(item.itemId)
@@ -112,7 +123,7 @@ export default (props) => {
                 </Block>
                 <Block marginTop="0px" marginBottom="30px">
                     <Button
-                        onClick={() => alert("click")}
+                        onClick={() => {setIsSignInModalOpen(true)}}
                         size={SIZE.default}
                         shape={SHAPE.pill}
                         kind={KIND.tertiary}
@@ -128,7 +139,7 @@ export default (props) => {
                     >
                         <FiLogIn style={{
                             marginRight: "10px"
-                        }}/>  Login and Sign Up
+                        }}/>  {authUser !== undefined ? "Sign Out" : "Login and Sign Up"}
                     </Button>
                 </Block>
                 <Block alignItems={ALIGN.center}>

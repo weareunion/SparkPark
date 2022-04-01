@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import {PhoneInput} from "baseui/phone-input";
 import {Button, SHAPE, SIZE} from "baseui/button";
 import {Block} from "baseui/block";
@@ -9,10 +9,13 @@ import {PinCode} from "baseui/pin-code";
 import {HeadingXSmall, ParagraphMedium, ParagraphSmall} from "baseui/typography";
 
 import authAPI from './../API/auth'
+import {AuthenticationContext} from "../Store";
+import auth from "./../API/auth";
 
 export function LoginForm(props: {
     onLogin: () => void
 }) {
+
     const [country, setCountry] = React.useState(undefined);
     const [text, setText] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState('')
@@ -24,6 +27,8 @@ export function LoginForm(props: {
     ]);
     const [loadingState, setLoadingState] = React.useState(false)
     const [isInCodeConfirm, setCodeConfirm] = React.useState(false)
+    // @ts-ignore
+    const [authedUser, setAuthedUser] = useContext(AuthenticationContext)
 
     const validate = async () => {
         setLoadingState(true)
@@ -44,6 +49,7 @@ export function LoginForm(props: {
             }
         }else{
             if (await authAPI.verifyCode(values.concat())){
+                setAuthedUser(await authAPI.getCurrentlyAuthedUser())
                 setLoadingState(false)
                 props.onLogin()
             }else{
@@ -64,11 +70,15 @@ export function LoginForm(props: {
                 </Notification>
             }
             {isInCodeConfirm ? <Block>
-                <HeadingXSmall marginBottom="0px"><strong>We sent you a pin code</strong></HeadingXSmall>
-                <ParagraphSmall marginTop="0px">Please enter it below <u>I did not receive the code</u></ParagraphSmall>
+                <HeadingXSmall marginBottom="0px"><strong>{loadingState ? "Confirming your pin code..." : "We sent you a pin code"}</strong></HeadingXSmall>
+                <ParagraphSmall marginTop="0px">{loadingState ? "One moment" : "Please enter it below "}<u>I did not receive the code</u></ParagraphSmall>
                     <PinCode
                         values={values}
-                        onChange={({ values }) => setValues(values)}
+                        onChange={({ values }) => {
+                            setValues(values)
+                            if (values[values.length-1] != "") validate()
+                        }
+                        }
                         clearOnEscape
                     />
                 </Block> :
@@ -78,6 +88,12 @@ export function LoginForm(props: {
                         // @ts-ignore
                         ({option}) => setCountry(option)}
                     text={text}
+                    onKeyUp={(e) => {
+                        if (e.keyCode === 13){
+                            validate()
+                        }
+                    }
+                    }
                     onTextChange={e => setText(e.currentTarget.value)}
                     size={SIZE.default}
                     placeholder="(999) 999-9999"
