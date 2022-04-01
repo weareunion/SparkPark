@@ -30,7 +30,8 @@ function App() {
     const [themeVariant, setThemeVariant] = useState(LightTheme)
 
     return (
-        <StyletronProvider value={engine}>
+
+        <StyletronProvider value={engine} >
             <Store>
                 <AppContextualized/>
             </Store>

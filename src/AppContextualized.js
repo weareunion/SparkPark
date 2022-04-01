@@ -53,10 +53,12 @@ const AppContextualized = () => {
     honorDeviceTheme(setTheme);
 
     return (
-      <BaseProvider theme={theme}>
+      <BaseProvider theme={theme} >
+          <Block style={{ height: '100%', position: 'absolute', left: '0px', width: '100%', overflow: 'show'}} backgroundColor="backgroundPrimary" >
           <SignInModal/>
           <HeaderNavigation setTheme={setTheme}/>
           <BookSpace theme={theme}/>
+          </Block>
       </BaseProvider>
   )
 }
