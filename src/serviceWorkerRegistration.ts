@@ -48,6 +48,7 @@ export function register(config?: Config) {
             'This web app is being served cache-first by a service ' +
               'worker. To learn more, visit https://cra.link/PWA'
           );
+          alert('hey')
         });
       } else {
         // Is not localhost. Just register service worker
@@ -125,6 +126,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       }
     })
     .catch(() => {
+      alert('you are offline');
       console.log('No internet connection found. App is running in offline mode.');
     });
 }

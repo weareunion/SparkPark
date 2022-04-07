@@ -19,7 +19,7 @@ import {MdAddCircle} from "react-icons/md";
 import {CarCard} from "./CarCard";
 import {ProgressBar} from "baseui/progress-bar";
 import {getCars} from "../API/cars"
-import {AuthenticationContext} from "../Store";
+import {AuthenticationContext, ThemeContext} from "../Store";
 
 async function makeCarCards(){
     let out = [];
@@ -42,12 +42,13 @@ async function makeCarCards(){
     return out;
 }
 
-export default function BookSpace(props: {
-    theme: any
-}) {
+export default function BookSpace() {
+    // @ts-ignore
+    const [theme, setTheme] = useContext(ThemeContext)
     const [step, setStepState] = React.useState(0)
     const [inProp, setInProp] = useState(false);
     const [cars, setCars] = useState([0])
+
     // @ts-ignore
     const [authUser, setAuthUser] = useContext(AuthenticationContext)
     const setStep = (stepNum: React.SetStateAction<number>) => {
@@ -80,12 +81,8 @@ export default function BookSpace(props: {
                     <HeadingMedium marginBottom="0px" paddingTop="15px" marginTop="0px"><strong>Is this the right
                         parking
                         location?</strong></HeadingMedium></strong>
-                    <ParagraphMedium marginTop="0px">We don't want you to pay for the wrong spot</ParagraphMedium>
-                    <Block marginTop="30px">
-                        <ViewMap pinText="You should be here" badgeColor="purple" badgeText="JHB-747"
-                                 latitude="34.8241533"
-                                 longitude="-82.386209" theme={props.theme.name.includes('dark') ? 'dark' : 'light'}/>
-                    </Block>
+                    <ParagraphMedium marginTop="0px" marginBottom="20px">We don't want you to pay for the wrong spot</ParagraphMedium>
+
                     <Button
                         onClick={() => setStep(1)}
                         size={SIZE.default}
@@ -121,6 +118,11 @@ export default function BookSpace(props: {
                         >
                             Nope. I need to update my location
                         </Button>
+                        <Block marginTop="30px">
+                            <ViewMap pinText="You should be here" badgeColor="purple" badgeText="JHB-747"
+                                     latitude="34.8241533"
+                                     longitude="-82.386209" theme={theme.name.includes('dark') ? 'dark' : 'light'}/>
+                        </Block>
                     </Block></>
             }
         },

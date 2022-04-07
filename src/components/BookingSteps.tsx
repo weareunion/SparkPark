@@ -15,7 +15,7 @@ export function BookingSteps(props: {
             closeable={false}
             kind={KINDTAG.warning}
             variant={VARIANT.solid}
-            size={SIZETAG.medium}
+            size={SIZETAG.small}
             overrides={{
                 Root: {
                     style: {

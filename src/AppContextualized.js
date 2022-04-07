@@ -1,31 +1,15 @@
 import HeaderNavigation from "./components/headerNavigation";
-import {BaseProvider, DarkTheme, LightTheme} from "baseui";
+import {BaseProvider} from "baseui";
 import React, {useContext} from "react";
 import {SignInContext, ThemeContext} from "./Store";
 import BookSpace from "./components/BookSpace";
-import {Modal, ModalBody, ModalButton, ModalFooter, ModalHeader, ROLE, SIZE} from "baseui/modal";
-import { KIND as ButtonKind } from "baseui/button";
+import {Modal, ModalBody, ModalHeader, ROLE, SIZE} from "baseui/modal";
 import {LoginForm} from "./components/LoginForm";
 import {Block} from "baseui/block";
+import {honorDeviceTheme} from "./HonorDeviceTheme";
+import RoutingWrapper from "./RoutingWrapper";
 
 
-function honorDeviceTheme(setTheme) {
-    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-
-    function changeTheme() {
-        if (darkThemeMq.matches) {
-            setTheme(DarkTheme)
-        } else {
-            setTheme(LightTheme)
-        }
-    }
-
-    darkThemeMq.addListener(e => {
-        changeTheme();
-    });
-
-    changeTheme()
-}
 const SignInModal = (props) => {
     const [isOpen, setIsOpen] = React.useContext(SignInContext);
     return (
@@ -56,8 +40,7 @@ const AppContextualized = () => {
       <BaseProvider theme={theme} >
           <Block style={{ height: '100%', position: 'absolute', left: '0px', width: '100%', overflow: 'show'}} backgroundColor="backgroundPrimary" >
           <SignInModal/>
-          <HeaderNavigation setTheme={setTheme}/>
-          <BookSpace theme={theme}/>
+          <RoutingWrapper></RoutingWrapper>
           </Block>
       </BaseProvider>
   )

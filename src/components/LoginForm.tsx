@@ -75,7 +75,7 @@ export function LoginForm(props: {
 
             {isInCodeConfirm && authedUser === undefined ? <Block>
                 <HeadingXSmall marginBottom="0px"><strong>{loadingState ? "Confirming your pin code..." : "We sent you a pin code"}</strong></HeadingXSmall>
-                <ParagraphSmall marginTop="0px">{loadingState ? "One moment" : "Please enter it below "}<u>I did not receive the code</u></ParagraphSmall>
+                <ParagraphSmall marginTop="0px">{loadingState ? "One moment " : "Please enter it below "}<u>I did not receive the code</u></ParagraphSmall>
                     <PinCode
                         values={values}
                         onChange={({ values }) => {

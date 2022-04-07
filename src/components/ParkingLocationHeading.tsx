@@ -5,14 +5,17 @@ import {Alert, ArrowLeft} from "baseui/icon";
 import {HeadingLarge, HeadingMedium, HeadingXLarge, HeadingXSmall, ParagraphSmall} from "baseui/typography";
 import {FaParking} from "react-icons/fa";
 import {MdLocationPin, MdOutlineQrCode} from "react-icons/md";
-import React from "react";
+import React, {useContext} from "react";
 import IconedText from "./IconedText";
+import {RoutingContext} from "../Store";
 
 export function ParkingLocationHeading(props: {
     compact: boolean,
     back: boolean,
     backFunc?: () => void
 }) {
+    // @ts-ignore
+    const [activeRoute, followRoute] = useContext(RoutingContext)
     const {enqueue} = useSnackbar();
     return <Block backgroundColor="background" padding="30px"
                   paddingTop={props.compact ? (props.back ? "20px" : "30px") : "40px"}
@@ -52,7 +55,7 @@ export function ParkingLocationHeading(props: {
                 "" :
                 <ParagraphSmall marginTop="20px" marginBottom="5px" color="muted">
                 <IconedText icon={<MdOutlineQrCode/>} margin="5px">
-                    <strong>Lot Code: </strong>JHB-747
+                    <strong>Lot Code: </strong>{activeRoute.params.id}
                 </IconedText>
                 </ParagraphSmall>
             }
